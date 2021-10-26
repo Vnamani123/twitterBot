@@ -1,0 +1,27 @@
+{
+  "name": "testtwitbot",
+  "version": "1.0.0",
+  "description": "this is a test for twit bot",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vnamani123/twitterBot.git"
+  },
+  "keywords": [
+    "twit",
+    "bot"
+  ],
+  "author": "vyshu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vnamani123/twitterBot/issues"
+  },
+  "homepage": "https://github.com/Vnamani123/twitterBot#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "twit": "^2.2.11"
+  }
+}
