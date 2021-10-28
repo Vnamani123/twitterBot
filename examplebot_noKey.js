@@ -96,9 +96,9 @@ function respondToMention() {
 			console.log('Error: ', err);
 		  }
 		  else {
-		  	mention = reply.pick();
-		  	mentionId = mention.id_str;
-		  	mentioner = '@' + mention.user.screen_name;
+		  	var mention = reply.pick();
+		  	var mentionId = mention.id_str;
+		  	var mentioner = '@' + mention.user.screen_name;
 		  	
 		  	var tweet = mentioner + " " + pre.pick();
 			if (debug) 
