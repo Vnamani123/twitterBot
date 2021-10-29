@@ -10,59 +10,67 @@ const { secureHeapUsed } = require('crypto');
 
 
 
-var today = new Date();
-var time = today.getHours();
-var r = Math.floor(Math.random() * (3 - 0) + 0);
-var tweet = " ";
+// var today = new Date();
+// var time = today.getHours();
+// var r = Math.floor(Math.random() * (3 - 0) + 0);
+// var tweet = " ";
 var mainSearch;
-function day() {
-	if (time < 11 && time > 0) {
-		mainSearch = {q: '#Breakfast, #breakfast', count: 1, result_type: 'popular', lang: 'en'};
-		switch (r) {
-			case 0:
-				tweet = "Try this place for Breakfast today!";
-				break;
-			case 1:
-				tweet = "Start off your day with a great meal at this popular breakfast joint!";
-				break;
-			case 2:
-				tweet = "It's too early to function. Let's eat!";
-				break;		
-		}
-	} else if (time >= 11 && time < 16) {
-		mainSearch = {q: "#Lunch, #lunch", count: 1, result_type: "popular", lang: 'en'};
-		switch (r) {
-			case 0:
-				tweet = "Hey hey! Lunchtime is here; how about some food from here?";
-				break;
-			case 1:
-				tweet = "Best time of the day is here! Munch on your Lunch at this popular place!";
-				break;
-			case 2:
-				tweet = "Mmmmm, Lunchtime! Go here to fill your tumm.";
-				break;		
-		}
-	} else if (time >= 16 && time <= 0) {
-		mainSearch = {q: '#Dinner, #dinner', count: 1, result_type: 'popular', lang: 'en'};
-		switch (r) {
-			case 0:
-				tweet = "Going out for dinner? This classy place is PERFECT for tonight!";
-				break;
-			case 1:
-				tweet = "Does thou wanteth some supper? Tryeth this exquisite site.";
-				break;
-			case 2:
-				tweet = "It's been a long day. Treat yourself to some dinner here!";
-				break;		
-		}
-	} 
-}
+const hour = new Date().getHours(); 
+var r = Math.floor(Math.random() * (3 - 0) + 0);
+var tweet = '';
 
-// This function finds the latest tweet with the mainSearch based on time of day, and retweets it.
+	if (hour < 11 && hour > 0) {
+		mainSearch = "Breakfast";
+		// mainSearch = {q: '#Breakfast, #breakfast', count: 1, result_type: 'popular', lang: 'en'};
+		// switch (r) {
+		// 	case 0:
+		// 		tweet = "Try this place for Breakfast today!";
+		// 		break;
+		// 	case 1:
+		// 		tweet = "Start off your day with a great meal at this popular breakfast joint!";
+		// 		break;
+		// 	case 2:
+		// 		tweet = "It's too early to function. Let's eat!";
+		// 		break;		
+		// }
+	} else if (hour >= 11 && hour < 16) {
+		mainSearch = "Lunch";
+		// mainSearch = {q: "#Lunch, #lunch", count: 1, result_type: "popular", lang: 'en'};
+		// switch (r) {
+		// 	case 0:
+		// 		tweet = "Hey hey! Lunchtime is here; how about some food from here?";
+		// 		break;
+		// 	case 1:
+		// 		tweet = "Best time of the day is here! Munch on your Lunch at this popular place!";
+		// 		break;
+		// 	case 2:
+		// 		tweet = "Mmmmm, Lunchtime! Go here to fill your tumm.";
+		// 		break;		
+		// }
+	} else {
+		mainSearch = "Dinner";
+		// mainSearch = {q: '#Dinner, #dinner', count: 1, result_type: 'popular', lang: 'en'};
+		// switch (r) {
+		// 	case 0:
+		// 		tweet = "Going out for dinner? This classy place is PERFECT for tonight!";
+		// 		break;
+		// 	case 1:
+		// 		tweet = "Does thou wanteth some supper? Tryeth this exquisite site.";
+		// 		break;
+		// 	case 2:
+		// 		tweet = "It's been a long day. Treat yourself to some dinner here!";
+		// 		break;		
+		// }
+	} 
+
+	var twetSearch = {q: mainSearch, count: 10, result_type: 'popular', lang: 'en'}; 
+
+//This function finds the latest tweet with the mainSearch based on time of day, and retweets it.
 
 
 function tweetIt() {
-	T.get('search/tweets', mainSearch, 
+	// console.log(mainSearch);
+	T.get('search/tweets', twetSearch, 
 		function (err, data) {
 			if (!err) {
 				// grab ID of tweet to retweet
@@ -94,7 +102,7 @@ tweetIt();
 
 
 // 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 60 = 1 hour --> 1000 * 60 * 60
-setInterval(tweetIt, 1000*60); //every hour? 4 hours?
+//setInterval(tweetIt, 1000*60*60); //every hour? 4 hours?
 
 
 
