@@ -14,13 +14,13 @@ const { secureHeapUsed } = require('crypto');
 // var time = today.getHours();
 // var r = Math.floor(Math.random() * (3 - 0) + 0);
 // var tweet = " ";
-var mainSearch;
+var twetSearch;
 const hour = new Date().getHours(); 
 var r = Math.floor(Math.random() * (3 - 0) + 0);
 var tweet = '';
 
 	if (hour < 11 && hour > 0) {
-		mainSearch = "Breakfast";
+		twetSearch = {q: '#breakfast', count: 10, result_type: 'recent', lang: 'en'};
 		// mainSearch = {q: '#Breakfast, #breakfast', count: 1, result_type: 'popular', lang: 'en'};
 		// switch (r) {
 		// 	case 0:
@@ -34,8 +34,7 @@ var tweet = '';
 		// 		break;		
 		// }
 	} else if (hour >= 11 && hour < 16) {
-		mainSearch = "Lunch";
-		// mainSearch = {q: "#Lunch, #lunch", count: 1, result_type: "popular", lang: 'en'};
+		twetSearch = {q: '#lunch', count: 10, result_type: 'recent', lang: 'en'};
 		// switch (r) {
 		// 	case 0:
 		// 		tweet = "Hey hey! Lunchtime is here; how about some food from here?";
@@ -48,8 +47,7 @@ var tweet = '';
 		// 		break;		
 		// }
 	} else {
-		mainSearch = "Dinner";
-		// mainSearch = {q: '#Dinner, #dinner', count: 1, result_type: 'popular', lang: 'en'};
+		twetSearch = {q: '#lunch', count: 10, result_type: 'recent', lang: 'en'};
 		// switch (r) {
 		// 	case 0:
 		// 		tweet = "Going out for dinner? This classy place is PERFECT for tonight!";
@@ -61,25 +59,23 @@ var tweet = '';
 		// 		tweet = "It's been a long day. Treat yourself to some dinner here!";
 		// 		break;		
 		// }
-	} 
+	}
 
-	var twetSearch = {q: mainSearch, count: 10, result_type: 'popular', lang: 'en'}; 
 
 //This function finds the latest tweet with the mainSearch based on time of day, and retweets it.
 
 
 function tweetIt() {
-	// console.log(mainSearch);
+	console.log(twetSearch);
 	T.get('search/tweets', twetSearch, 
-		function (err, data) {
+		function (err, data, response) {
 			if (!err) {
 				// grab ID of tweet to retweet
-				  var retweetId = data.statuses[0].id_str;
+				  var retweetId = data.statuses[1].id_str;
 				  // Tell TWITTER to retweet
-				  T.post('statuses/retweet/:id', 
-				  {id: retweetId}, function(err, response) {
+				  T.post('statuses/retweet/' + retweetId, {}, function(err,response) {
 					if (err) {
-						console.log('Something went wrong while RETWEETING... Duplication maybe...');
+						console.log(err.message + 'Something went wrong while RETWEETING... Duplication maybe...');
 					} 
 					if (response) {
 						console.log('It worked');
@@ -97,12 +93,11 @@ tweetIt();
 
 //What needs to be done
 //how long the tweets
-//focus US country
 //quote retweet 
 
 
 // 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 60 = 1 hour --> 1000 * 60 * 60
-//setInterval(tweetIt, 1000*60*60); //every hour? 4 hours?
+setInterval(tweetIt, 1000*60*60*2); //2 hours
 
 
 
@@ -118,7 +113,7 @@ function followAMentioner() {
 				console.log(sn);
 			else {
 				//Now follow that user
-				T.post('friendships/create', {screen_name: sn }, function (error, reply) {
+				T.post('friendships/create', {screen_name: sn}, function (error, reply) {
 					if (err !== null) {
 						console.log('Error: ', err);
 					}
@@ -156,42 +151,4 @@ function respondToMention() {
 		  }
 	});
 }
-
-
-// //setting up a user stream
-// var stream = T.stream('user');
-// //anytime someone follows me
-// stream.on('follow', followed);
-// //what to tweet when followed
-// function followed(eventMsg) {
-// 	var name = eventMsg.source.name;
-// 	var screenName = eventMsg.source.screenName;
-// 	tweetFollow('.@' + screenName + ' do you like rainbows? 🌈')
-// }
-// //test followed function when to tweet
-// function tweetFollow(txt) {
-// 	var tweet = {
-// 		status: txt
-// 	}
-// 	T.post('statuses/update', tweet, tweeted);
-// 	// This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
-// 	function tweeted(err, data, response) {
-// 		if (err) {
-// 			console.log('Something went wrong');
-// 		} else {
-// 			console.log('It worked');
-// 		}
-// 	}
-	
-// 	function runBot() {
-// 		console.log(" "); // just for legible logs
-// 		var today = new Date();
-// 		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-// 		console.log(time);  // date/time of the request	
-// 		// if () {
-			
-// 		// }
-// 	}
-//}
-
 
