@@ -17,63 +17,71 @@ const { secureHeapUsed } = require('crypto');
 var twetSearch;
 const hour = new Date().getHours(); 
 var r = Math.floor(Math.random() * (3 - 0) + 0);
-var tweet = '';
-
-	if (hour < 11 && hour > 0) {
-		twetSearch = {q: '#breakfast', count: 10, result_type: 'recent', lang: 'en'};
-		// mainSearch = {q: '#Breakfast, #breakfast', count: 1, result_type: 'popular', lang: 'en'};
-		// switch (r) {
-		// 	case 0:
-		// 		tweet = "Try this place for Breakfast today!";
-		// 		break;
-		// 	case 1:
-		// 		tweet = "Start off your day with a great meal at this popular breakfast joint!";
-		// 		break;
-		// 	case 2:
-		// 		tweet = "It's too early to function. Let's eat!";
-		// 		break;		
-		// }
-	} else if (hour >= 11 && hour < 16) {
-		twetSearch = {q: '#lunch', count: 10, result_type: 'recent', lang: 'en'};
-		// switch (r) {
-		// 	case 0:
-		// 		tweet = "Hey hey! Lunchtime is here; how about some food from here?";
-		// 		break;
-		// 	case 1:
-		// 		tweet = "Best time of the day is here! Munch on your Lunch at this popular place!";
-		// 		break;
-		// 	case 2:
-		// 		tweet = "Mmmmm, Lunchtime! Go here to fill your tumm.";
-		// 		break;		
-		// }
-	} else {
-		twetSearch = {q: '#lunch', count: 10, result_type: 'recent', lang: 'en'};
-		// switch (r) {
-		// 	case 0:
-		// 		tweet = "Going out for dinner? This classy place is PERFECT for tonight!";
-		// 		break;
-		// 	case 1:
-		// 		tweet = "Does thou wanteth some supper? Tryeth this exquisite site.";
-		// 		break;
-		// 	case 2:
-		// 		tweet = "It's been a long day. Treat yourself to some dinner here!";
-		// 		break;		
-		// }
+function day() {
+	if (hour < 11 && hour >= 0) {
+		switch (r) {
+			case 0:
+				return "Try this place for Breakfast today! ";
+			case 1:
+				return "Start off your day with a great meal at this popular breakfast joint! ";
+			case 2:
+				return "It's too early to function. Let's eat! ";
+			
 	}
+	} else if (hour >= 11 && hour <= 17) {
+		switch (r) {
+			case 0:
+				return "Hey hey! Lunchtime is here; how about some food from here? ";
+			case 1:
+				return "Best time of the day is here! Munch on your Lunch at this popular place! ";
+			case 2:
+				return "Mmmmm, Lunchtime! Go here to fill your tumm. ";			
+		}
+	} else if (hour >= 18 && hour < 22) {
+		switch (r) {
+			case 0:
+				return "Going out for dinner? This classy place is PERFECT for tonight! ";	
+			case 1:
+				return "Does thou wanteth some supper? Tryeth this exquisite site. ";
+			case 2:
+				return "It's been a long day. Treat yourself to some dinner here! ";
+				
+		}
+	} else {
+		return "End your day with the sweet treat! ";
+	}
+}
 
+if (hour < 11 && hour >= 0) {
+	twetSearch = {q: '#Breakfast, #breakfast', count: 10, result_type: 'recent', lang: 'en'};
+} else if (hour >= 11 && hour <= 17) {
+	twetSearch = {q: '#Lunch, #lunch', count: 10, result_type: 'recent', lang: 'en'};
+} else if (hour >= 18 && hour <= 22) {
+	twetSearch = {q: '#Dinner, #dinner', count: 10, result_type: 'recent', lang: 'en'};
+} else {
+	twetSearch = {q: '#Dessert, #dessert', count: 10, result_type: 'recent', lang: 'en'};
+
+}
 
 //This function finds the latest tweet with the mainSearch based on time of day, and retweets it.
 
-
+//1. takes a string in paramater (strOne), line 80
+//2. call function in strOne
+//3. tweetSearch before get
+//4. build the replace message + adds meassge into a new function
+//5. javascript string methods, to splice
 function tweetIt() {
 	console.log(twetSearch);
 	T.get('search/tweets', twetSearch, 
 		function (err, data, response) {
 			if (!err) {
 				// grab ID of tweet to retweet
-				  var retweetId = data.statuses[1].id_str;
+				  var retweetId = data.statuses[0].id_str;
+				  var strOne = data.statuses[0].text;
+				  strOne = day() + strOne;
+				  console.log(strOne);
 				  // Tell TWITTER to retweet
-				  T.post('statuses/retweet/' + retweetId, {}, function(err,response) {
+				  T.post('statuses/update', {status: strOne}, function(err,response) {
 					if (err) {
 						console.log(err.message + 'Something went wrong while RETWEETING... Duplication maybe...');
 					} 
@@ -89,6 +97,7 @@ function tweetIt() {
 	);
 }
 
+setInterval(tweetIt, 1000*60*60*2); //every hour
 tweetIt();
 
 //What needs to be done
@@ -97,7 +106,6 @@ tweetIt();
 
 
 // 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 60 = 1 hour --> 1000 * 60 * 60
-setInterval(tweetIt, 1000*60*60*2); //2 hours
 
 
 
