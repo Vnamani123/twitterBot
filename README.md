@@ -1,5 +1,7 @@
 #ExampleBot
 
+Team 17: Nivediti Chellam, Vyshnavi Namani, Tyler Le, Amelie Wasserfuhr
+
 This bot retweets the latest tweet using the "#mediaarts" hashtag. It attempts to retweet once per hour.
 
 _Note: you must be comfortable using your computer's command line interface to use this bot. If you've never used it, there are tutorials for [Mac OSX](http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line) and [Windows](http://www.bleepingcomputer.com/tutorials/windows-command-prompt-introduction/)._

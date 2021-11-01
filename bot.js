@@ -9,11 +9,7 @@ const { secureHeapUsed } = require('crypto');
 
 
 
-
-// var today = new Date();
-// var time = today.getHours();
-// var r = Math.floor(Math.random() * (3 - 0) + 0);
-// var tweet = " ";
+//day function add the specific pharse string to the original tweet text
 var twetSearch;
 const hour = new Date().getHours(); 
 var r = Math.floor(Math.random() * (3 - 0) + 0);
@@ -23,7 +19,7 @@ function day() {
 			case 0:
 				return "Try this place for Breakfast today! ";
 			case 1:
-				return "Start off your day with a great meal at this popular breakfast joint! ";
+				return "Start off your day with a mea here! ";
 			case 2:
 				return "It's too early to function. Let's eat! ";
 			
@@ -31,20 +27,20 @@ function day() {
 	} else if (hour >= 11 && hour <= 17) {
 		switch (r) {
 			case 0:
-				return "Hey hey! Lunchtime is here; how about some food from here? ";
+				return "How about some food from here? ";
 			case 1:
-				return "Best time of the day is here! Munch on your Lunch at this popular place! ";
+				return "Munch on your Lunch at this popular place!";
 			case 2:
 				return "Mmmmm, Lunchtime! Go here to fill your tumm. ";			
 		}
 	} else if (hour >= 18 && hour < 22) {
 		switch (r) {
 			case 0:
-				return "Going out for dinner? This classy place is PERFECT for tonight! ";	
+				return "This classy place is PERFECT for tonight! ";	
 			case 1:
-				return "Does thou wanteth some supper? Tryeth this exquisite site. ";
+				return "Does thou wanteth some supper? Tryeth this! ";
 			case 2:
-				return "It's been a long day. Treat yourself to some dinner here! ";
+				return "Long day? Treat yourself to some dinner here!  ";
 				
 		}
 	} else {
@@ -52,6 +48,7 @@ function day() {
 	}
 }
 
+//checks the hour for each tweetIt
 if (hour < 11 && hour >= 0) {
 	twetSearch = {q: '#Breakfast, #breakfast', count: 10, result_type: 'recent', lang: 'en'};
 } else if (hour >= 11 && hour <= 17) {
@@ -64,12 +61,6 @@ if (hour < 11 && hour >= 0) {
 }
 
 //This function finds the latest tweet with the mainSearch based on time of day, and retweets it.
-
-//1. takes a string in paramater (strOne), line 80
-//2. call function in strOne
-//3. tweetSearch before get
-//4. build the replace message + adds meassge into a new function
-//5. javascript string methods, to splice
 function tweetIt() {
 	console.log(twetSearch);
 	T.get('search/tweets', twetSearch, 
@@ -96,17 +87,9 @@ function tweetIt() {
 		}
 	);
 }
-
-setInterval(tweetIt, 1000*60*60*2); //every hour
+setInterval(tweetIt, 1000*60*60);
 tweetIt();
-
-//What needs to be done
-//how long the tweets
-//quote retweet 
-
-
 // 1000 ms = 1 second, 1 sec * 60 = 1 min, 1 min * 60 = 1 hour --> 1000 * 60 * 60
-
 
 
 //follow a mentioner
