@@ -29,7 +29,7 @@ function day() {
 			case 0:
 				return "How about some food from here? ";
 			case 1:
-				return "Munch on your Lunch at this popular place!";
+				return "Munch on your Lunch at this popular place! ";
 			case 2:
 				return "Mmmmm, Lunchtime! Go here to fill your tumm. ";			
 		}
@@ -48,26 +48,27 @@ function day() {
 	}
 }
 
-//checks the hour for each tweetIt
-if (hour < 11 && hour >= 0) {
-	twetSearch = {q: '#Breakfast, #breakfast', count: 10, result_type: 'recent', lang: 'en'};
-} else if (hour >= 11 && hour <= 17) {
-	twetSearch = {q: '#Lunch, #lunch', count: 10, result_type: 'recent', lang: 'en'};
-} else if (hour >= 18 && hour <= 22) {
-	twetSearch = {q: '#Dinner, #dinner', count: 10, result_type: 'recent', lang: 'en'};
-} else {
-	twetSearch = {q: '#Dessert, #dessert', count: 10, result_type: 'recent', lang: 'en'};
+//checks the hour for each tweetIt and returns the specific hashtag
+function searching() {
+	if (hour < 11 && hour >= 0) {
+		return {q: '#Breakfast, #breakfast', count: 10, result_type: 'recent', lang: 'en'};
+	} else if (hour >= 11 && hour <= 17) {
+		return {q: '#Lunch, #lunch', count: 10, result_type: 'recent', lang: 'en'};
+	} else if (hour >= 18 && hour <= 22) {
+		return {q: '#Dinner, #dinner', count: 10, result_type: 'recent', lang: 'en'};
+	} else {
+		return {q: '#Dessert, #dessert', count: 10, result_type: 'recent', lang: 'en'};
 
+	}
 }
 
-//This function finds the latest tweet with the mainSearch based on time of day, and retweets it.
+//This function finds the latest tweet returning what to search and post with unique messages
 function tweetIt() {
-	console.log(twetSearch);
-	T.get('search/tweets', twetSearch, 
+	console.log(searching());
+	T.get('search/tweets', searching(), 
 		function (err, data, response) {
 			if (!err) {
 				// grab ID of tweet to retweet
-				  var retweetId = data.statuses[0].id_str;
 				  var strOne = data.statuses[0].text;
 				  strOne = day() + strOne;
 				  console.log(strOne);
