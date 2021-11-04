@@ -95,9 +95,9 @@ tweetIt();
 
 //follow a mentioner
 function followAMentioner() {
-	T.get('statuses/mentions_timeline', { count:50, include_rts:1 },  function (error, reply) {
-		  if (err !== null) {
-			console.log('Error: ', error);
+	T.get('statuses/mentions_timeline', { count:50, include_rts:1 },  function (err, reply) {
+		  if (err) {
+			console.log('Error: ', err);
 		  }
 		  else {
 		  	var sn = reply.pick().user.screen_name;
@@ -105,8 +105,8 @@ function followAMentioner() {
 				console.log(sn);
 			else {
 				//Now follow that user
-				T.post('friendships/create', {screen_name: sn}, function (error, reply) {
-					if (err !== null) {
+				T.post('friendships/create', {screen_name: sn}, function (err, reply) {
+					if (err) {
 						console.log('Error: ', err);
 					}
 					else {
@@ -120,7 +120,7 @@ function followAMentioner() {
 //respond to a mention
 function respondToMention() {
 	T.get('statuses/mentions_timeline', { count:100, include_rts:0 },  function (err, reply) {
-		  if (err !== null) {
+		  if (err) {
 			console.log('Error: ', err);
 		  }
 		  else {
@@ -133,7 +133,7 @@ function respondToMention() {
 				console.log(tweetFinal);
 			else
 				T.post('statuses/update', {status: tweetFinal, in_reply_to_status_id: mentionId }, function(err, reply) {
-					if (err !== null) {
+					if (err) {
 						console.log('Error: ', err);
 					}
 					else {
