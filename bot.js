@@ -8,11 +8,10 @@ var fs = require('fs');
 const { secureHeapUsed } = require('crypto');
 
 
-
 //day function add the specific pharse string to the original tweet text
 function day() {
-	const hour = new Date().getHours();
-	var r = Math.floor(Math.random() * (3 - 0) + 0);
+	let hour = new Date().getHours();
+	let  r = Math.floor(Math.random() * (3 - 0) + 0);
 	if (hour < 11 && hour >= 0) {
 		switch (r) {
 			case 0:
