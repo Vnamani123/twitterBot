@@ -1,6 +1,6 @@
 #ExampleBot
 
-Team 17: Nivediti Chellam, Vyshnavi Namani, Tyler Le, Amelie Wasserfuhr
+Team 17: Nivedita Chellam, Vyshnavi Namani, Tyler Le, Amelie Wasserfuhr
 
 This bot retweets the latest tweet using the "#mediaarts" hashtag. It attempts to retweet once per hour.
 
