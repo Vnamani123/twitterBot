@@ -48,11 +48,12 @@ function day() {
 
 //checks the hour for each tweetIt and returns the specific hashtag
 function searching() {
-	if (hour < 11 && hour >= 0) {
+	let time = new Date().getHours();
+	if (time < 11 && time >= 0) {
 		return {q: '#Breakfast, #breakfast', count: 10, result_type: 'recent', lang: 'en'};
-	} else if (hour >= 11 && hour <= 17) {
+	} else if (time >= 11 && time <= 17) {
 		return {q: '#Lunch, #lunch', count: 10, result_type: 'recent', lang: 'en'};
-	} else if (hour >= 18 && hour <= 22) {
+	} else if (time >= 18 && time <= 22) {
 		return {q: '#Dinner, #dinner', count: 10, result_type: 'recent', lang: 'en'};
 	} else {
 		return {q: '#Dessert, #dessert', count: 10, result_type: 'recent', lang: 'en'};
